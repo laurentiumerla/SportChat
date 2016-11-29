@@ -21,6 +21,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/scripts", express.static(__dirname + "/node_modules/"));
 
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // var routes = require("./routes/routes.js")(app);
 // var ChatModel = require("./models/chatmodel.js");
 
@@ -33,6 +40,7 @@ io.on("connection", function (socket) {
         //     }
         //     io.emit("chat_message", msg);
         // });
+        io.emit("chat_message", msg);
     });
 });
 
