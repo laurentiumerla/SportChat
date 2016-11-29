@@ -1,0 +1,24 @@
+{
+  "name": "sportchatserver",
+  "version": "1.0.0",
+  "description": "Chat Application",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurentiumerla/SportChat.git"
+  },
+  "keywords": [
+    "chat",
+    "sport",
+    "node"
+  ],
+  "author": "Laurentiu Cristian Merla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laurentiumerla/SportChat/issues"
+  },
+  "homepage": "https://github.com/laurentiumerla/SportChat#readme"
+}
