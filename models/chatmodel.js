@@ -21,16 +21,18 @@ ChatModel.create = function (data, callback) {
     return callback(null, chatMessage);
 }
 
-// ChatModel.getAll = function (callback) {
-//     var statement = "SELECT id, message, createdOn " +
-//         "FROM `" + config.couchbase.bucket + "` ORDER BY createdOn ASC";
-//     var query = N1qlQuery.fromString(statement).consistency(N1qlQuery.Consistency.REQUEST_PLUS);
-//     db.query(query, function (error, result) {
-//         if (error) {
-//             return callback(error, null);
-//         }
-//         callback(null, result);
-//     });
-// };
+ChatModel.getAll = function (callback) {
+    // var statement = "SELECT id, message, createdOn " +
+    //     "FROM `" + config.couchbase.bucket + "` ORDER BY createdOn ASC";
+    // var query = N1qlQuery.fromString(statement).consistency(N1qlQuery.Consistency.REQUEST_PLUS);
+    // db.query(query, function (error, result) {
+    //     if (error) {
+    //         return callback(error, null);
+    //     }
+    //     callback(null, result);
+    // });
+
+    callback(null, {});
+};
 
 module.exports = ChatModel;
