@@ -46,7 +46,7 @@ io.on("connection", function (socket) {
         //     // io.emit("chat_message", result);
         // });
         // io.emit("chat_message", msg);
-        socket.broadcast.emit('chat_message', {
+        io.broadcast.emit('chat_message', {
             username: socket.username,
             message: msg
         });
