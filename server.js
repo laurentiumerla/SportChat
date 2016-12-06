@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/scripts", express.static(__dirname + "/node_modules/"));
 
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -30,19 +30,59 @@ app.use(function(req, res, next) {
 
 // var routes = require("./routes/routes.js")(app);
 var ChatModel = require("./models/chatmodel.js");
+var numUsers = 0;
 
 io.on("connection", function (socket) {
+    var addedUser = false;
+
+
     socket.on("chat_message", function (msg) {
         console.log(JSON.stringify(msg));
-        ChatModel.create({message: msg}, function(error, result) {
-            if(error) {
+        ChatModel.create({ message: msg }, function (error, result) {
+            if (error) {
                 console.log(JSON.stringify(error));
             }
             io.emit("chat_message", msg);
             // io.emit("chat_message", result);
         });
         // io.emit("chat_message", msg);
+        socket.broadcast.emit('chat_message', {
+            username: socket.username,
+            message: msg
+        });
     });
+
+    // when the client emits 'add user', this listens and executes
+    socket.on('add_user', function (username) {
+        if (addedUser) return;
+
+        // we store the username in the socket session for this client
+        socket.username = username;
+        ++numUsers;
+        addedUser = true;
+        socket.emit('login', {
+            numUsers: numUsers
+        });
+        // echo globally (all clients) that a person has connected
+        socket.broadcast.emit('user_joined', {
+            username: socket.username,
+            numUsers: numUsers
+        });
+    });
+
+    // when the user disconnects.. perform this
+    socket.on('disconnect', function () {
+        if (addedUser) {
+            --numUsers;
+
+            // echo globally that this client has left
+            socket.broadcast.emit('user_left', {
+                username: socket.username,
+                numUsers: numUsers
+            });
+        }
+    });
+
 });
 
 server.listen(process.env.PORT || 3000, function () {
