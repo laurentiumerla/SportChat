@@ -28,7 +28,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-var routes = require("./routes/routes.js")(app);
+// var routes = require("./routes/routes.js")(app);
 var ChatModel = require("./models/chatmodel.js");
 
 io.on("connection", function (socket) {
