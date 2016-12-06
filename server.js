@@ -38,7 +38,8 @@ io.on("connection", function (socket) {
             if(error) {
                 console.log(JSON.stringify(error));
             }
-            io.emit("chat_message", msg);
+            // io.emit("chat_message", msg);
+            io.emit("chat_message", result);
         });
         // io.emit("chat_message", msg);
     });
