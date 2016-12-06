@@ -28,19 +28,19 @@ app.use(function(req, res, next) {
     next();
 });
 
-// var routes = require("./routes/routes.js")(app);
-// var ChatModel = require("./models/chatmodel.js");
+var routes = require("./routes/routes.js")(app);
+var ChatModel = require("./models/chatmodel.js");
 
 io.on("connection", function (socket) {
     socket.on("chat_message", function (msg) {
         console.log(JSON.stringify(msg));
-        // ChatModel.create({message: msg}, function(error, result) {
-        //     if(error) {
-        //         console.log(JSON.stringify(error));
-        //     }
-        //     io.emit("chat_message", msg);
-        // });
-        io.emit("chat_message", msg);
+        ChatModel.create({message: msg}, function(error, result) {
+            if(error) {
+                console.log(JSON.stringify(error));
+            }
+            io.emit("chat_message", msg);
+        });
+        // io.emit("chat_message", msg);
     });
 });
 
